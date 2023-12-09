@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	Get,
 	HttpStatus,
 	Post,
 	Res
@@ -26,5 +27,11 @@ export class ExpertsController {
 
 		const expert = await this.expertsService.createExpert(data)
 		return res.status(HttpStatus.CREATED).json(expert)
+	}
+
+	@Get()
+	async getExperts(@Res() res: Response) {
+		const experts = await this.expertsService.findAllExperts()
+		return res.json(experts)
 	}
 }
