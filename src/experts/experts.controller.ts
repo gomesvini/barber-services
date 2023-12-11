@@ -4,6 +4,8 @@ import {
 	Controller,
 	Get,
 	HttpStatus,
+	NotFoundException,
+	Param,
 	Post,
 	Res
 } from '@nestjs/common'
@@ -33,5 +35,16 @@ export class ExpertsController {
 	async getExperts(@Res() res: Response) {
 		const experts = await this.expertsService.findAllExperts()
 		return res.json(experts)
+	}
+
+	@Get(':id')
+	async getExpert(@Param('id') id: string, @Res() res: Response) {
+		const expert = await this.expertsService.findExpert(id)
+
+		if (!expert) {
+			throw new NotFoundException('O profissional não existe.')
+		}
+
+		return res.json(expert)
 	}
 }
