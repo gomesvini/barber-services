@@ -20,4 +20,19 @@ export class QueuesService {
 			}
 		})
 	}
+
+	async getQueues() {
+		return await this.prisma.queue.findMany()
+	}
+
+	async getExpertQueues(expertId: string) {
+		return await this.prisma.queue.findMany({
+			where: {
+				expertId
+			},
+			include: {
+				expert: true
+			}
+		})
+	}
 }
